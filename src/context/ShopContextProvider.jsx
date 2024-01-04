@@ -3,7 +3,7 @@ import { ShopContext } from "./shopContext";
 import { PRODUCTS } from "../products";
 
 export const ShopContextProvider = (props) => {
-  const getDefaultCart = () => {
+  const getDefaultCart = (id) => {
     let cart = {};
     for (let i = 1; i < PRODUCTS.length + 1; i++) {
       cart[i] = 0;
@@ -25,21 +25,22 @@ export const ShopContextProvider = (props) => {
     setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
   };
 
-  const getTotalCartAmount = ()=> {
+  const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
-        if(cartItems[item] > 0) {
-            let itemInfo = PRODUCTS.find((product) => product.id === Number((item)));
-            totalAmount += cartItems[item] * itemInfo.price
-        }
-    } 
-    
+      if (cartItems[item] > 0) {
+        let itemInfo = PRODUCTS.find((product) => product.id === Number(item));
+        totalAmount += cartItems[item] * itemInfo.price;
+      }
+    }
     return totalAmount;
-  }
+  };
 
-  const clearCart = (itemId, id) => {
-    removeFromCart(itemId);
-    updateItemCount((0), id)
+  const clearCart = () => {
+    let totalAmount = 0;
+    if (totalAmount <= 0) {
+      updateItemCount();
+    }
   };
 
   const contextValue = {
@@ -48,7 +49,7 @@ export const ShopContextProvider = (props) => {
     removeFromCart,
     updateItemCount,
     getTotalCartAmount,
-    clearCart
+    clearCart,
   };
 
   return (
