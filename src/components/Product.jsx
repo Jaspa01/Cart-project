@@ -1,9 +1,8 @@
 import { useContext } from "react";
-import { PRODUCTS } from "../../products";
-import { ShopContext } from "../../context/shopContext";
+import { ShopContext } from "../context/shopContext";
 
 const Product = (props) => {
-  const { id, productName, price, productImage } = props.items;
+  const { id, productName, price, imageUrl } = props.items;
 
   const { cartItems, addToCart, removeFromCart } = useContext(ShopContext);
 
@@ -11,7 +10,7 @@ const Product = (props) => {
 
   return (
     <div className="product">
-      <img src={productImage} alt="product-img" />
+      <img src={imageUrl} alt="product-img" />
       <div className="description">
         <p>
           <b>{productName}</b>
